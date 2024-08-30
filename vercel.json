@@ -1,14 +1,18 @@
-{ 
-  "builds": [ 
-    { 
-      "src": "./app.js", 
-      "use": "@vercel/node" 
-    } 
-  ], 
-  "routes": [ 
-    { 
-      "src": "/.*", 
-      "dest": "app.js" 
-    } 
-  ] 
-} 
+{
+  "builds": [
+    {
+      "src": "frontend/chat/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "frontend/chat/dist"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
+
