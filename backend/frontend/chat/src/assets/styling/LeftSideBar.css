@@ -1,0 +1,61 @@
+/* Ensure sidebar is on top */
+.custom-sidebar {
+  background-color: #7695FF;
+  height: 100vh;
+  width: 250px; /* Set a fixed width */
+  padding-top: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  left: 0;
+   /* Increase z-index to be above other content */
+}
+.custom-link:hover {
+  background-color: #FFD7C4 !important; /* Peach background on hover */
+  color: #7695FF !important; /* Blue text on hover */
+  transform: translateX(7px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure cards are behind the sidebar */
+.card {
+  z-index: 1; /* Set cards with a lower z-index */
+  position: relative; /* Position relative to manage stacking context */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #FFD7C4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border 0.3s ease;
+  border-radius: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #FF9874;
+  animation: cardAppearance 0.5s ease-in-out;
+}
+
+/* Mobile styles for sidebar */
+@media (max-width: 768px) {
+  .custom-sidebar {
+    transform: translateX(-100%); /* Initially hidden on mobile */
+    width: 70%; /* Adjust width for mobile */
+  }
+
+  .custom-sidebar.open {
+    transform: translateX(0); /* Show sidebar when open */
+  }
+
+  .toggle-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1100; /* Button should be above sidebar */
+    background: #7695FF;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+}

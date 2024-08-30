@@ -1,0 +1,54 @@
+The userId is stored inside the payload of the JWT token.
+The payload is encoded and signed using a secret key to generate the token.
+The server can later decode the token to extract the userId and use it for session management or authorization purposes.
+
+{
+  "_id": "64e68c1f9b28f60009d8b50d",
+  "username": "amaan",
+  "email": "amaan@example.com"
+}
+When the token is generated using:
+
+js
+Copy code
+const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1d' });
+The payload of the token will contain:
+
+json
+Copy code
+{
+  "userId": "64e68c1f9b28f60009d8b50d",
+  "iat": 1627286400,   // Issued at timestamp (automatically added by jwt)
+  "exp": 1627372800    // Expiration timestamp (automatically added by jwt based on {expiresIn: '1d'})
+}
+userId: The MongoDB user's _id is stored in the payload.
+iat (Issued At): The timestamp of when the token was created.
+exp (Expiration): The timestamp of when the token will expire (1 day in this case).
+2. What the Token Looks Like
+The JWT token consists of three parts:
+
+Header: Metadata about the token (e.g., the algorithm used for signing).
+Payload: The data you want to store (e.g., userId, iat, exp).
+Signature: A cryptographic signature ensuring the token's integrity.
+The full token looks something like this:
+
+Copy code
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NGU2OGMxZjliMjhmNjAwMDlkOGI1MGQiLCJpYXQiOjE2MjcyODY0MDAsImV4cCI6MTYyNzM3MjgwMH0.j5Ep_aS5Zm7Xfi0Zje4xM12ZkpeN5M9O7CPhJjhbTlo
+3. Decoding the JWT Token
+If you decode this token (without verifying the signature), you’ll get back the payload, which contains:
+
+json
+Copy code
+{
+  "userId": "64e68c1f9b28f60009d8b50d",
+  "iat": 1627286400,
+  "exp": 1627372800
+}
+4. Verifying the Token
+On the server side, when a user sends this token in a request (e.g., as a cookie or in the Authorization header), you can verify and decode it using jwt.verify():
+
+js
+Copy code
+const decoded = jwt.verify(token, process.env.SECRET_KEY);
+console.log(decoded.userId);  // Outputs: 64e68c1f9b28f60009d8b50d
+This allows you to extract the userId and use it to identify which user is making the request. You can then fetch the user’s details from your database using this userId.

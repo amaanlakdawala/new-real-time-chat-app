@@ -1,0 +1,25 @@
+.fixed-sidebar {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  height: 100vh; /* Full height */
+  overflow-y: auto; /* Scroll if content is taller than viewport */
+}
+
+.content {
+  margin-left: 25%; /* Adjust based on sidebar width */
+  padding: 20px;
+}
+@media (max-width: 768px) {
+  .content {
+    margin-left: 0; /* Remove the left margin */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically if needed */
+    width: 100%; /* Full width on mobile */
+  }
+  
+}
